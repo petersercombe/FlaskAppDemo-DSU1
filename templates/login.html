@@ -1,6 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
 
 <form action="/login" method="POST">
   <input type="text" name="username" placeholder="username">
   <input type="password" name="password" placeholder="password">
   <input type="submit" value="Submit via POST">
 </form>
+
+{% if failedLogin %}
+<div class="alert alert-danger" role="alert">
+  Incorrect username or password entered. Please try again.
+</div>
+{% endif %}
+
+
+{% endblock %}

@@ -11,7 +11,7 @@ adminPassword = "admin"
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template("index.html") #, user=session["username"])
+    return render_template("index.html", user=session["username"] if "username" in session else None)
 
 
 @app.route('/login', methods = ["POST", "GET"])
@@ -20,15 +20,18 @@ def login():
         if "username" in session:
             return redirect("/") # Send to home page if logged in already.
         else:
-            return render_template("login.html")
+            session['failedLogin'] = False
+            return render_template("login.html", failedLogin = session['failedLogin'])
     else:
         username = request.form["username"]
         password = request.form["password"]
         if username == adminUsername and password == adminPassword: # Check entered username and password match the known ones
+            session['failedLogin'] = False
             session["username"] = username
             return redirect("/")
         else:
-            return redirect("/login")
+            session['failedLogin'] = True
+            return render_template("login.html", failedLogin = session['failedLogin'])
 
 @app.route('/logout')
 def logout():
