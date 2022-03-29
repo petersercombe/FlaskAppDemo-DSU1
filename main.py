@@ -24,12 +24,16 @@ def login():
     else:
         username = request.form["username"]
         password = request.form["password"]
-        if username == adminUsername and password == adminPassword:
+        if username == adminUsername and password == adminPassword: # Check entered username and password match the known ones
             session["username"] = username
             return redirect("/")
         else:
             return redirect("/login")
 
+@app.route('/logout')
+def logout():
+    session.pop("username")
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run()
