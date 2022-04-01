@@ -10,11 +10,12 @@
   <input type="submit" value="Submit via POST">
 </form>
 
-{% if failedLogin %}
-<div class="alert alert-danger" role="alert">
-  Incorrect username or password entered. Please try again.
-</div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {{ messages[0] }}
+    </div>
 {% endif %}
-
+{% endwith %}
 
 {% endblock %}

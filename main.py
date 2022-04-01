@@ -14,24 +14,25 @@ def home():
     return render_template("index.html", user=session["username"] if "username" in session else None)
 
 
-@app.route('/login', methods = ["POST", "GET"])
+@app.route('/login')
 def login():
-    if request.method == "GET":
-        if "username" in session:
-            return redirect("/") # Send to home page if logged in already.
-        else:
-            session['failedLogin'] = False
-            return render_template("login.html", failedLogin = session['failedLogin'])
+    if "username" in session:
+        return redirect("/") # Send to home page if logged in already.
     else:
-        username = request.form["username"]
-        password = request.form["password"]
-        if username == adminUsername and password == adminPassword: # Check entered username and password match the known ones
-            session['failedLogin'] = False
-            session["username"] = username
-            return redirect("/")
-        else:
-            session['failedLogin'] = True
-            return render_template("login.html", failedLogin = session['failedLogin'])
+        return render_template("login.html")
+
+
+@app.route('/login', methods = ["POST"])
+def loginPost():
+    username = request.form["username"]
+    password = request.form["password"]
+    if username == adminUsername and password == adminPassword: # Check entered username and password match the known ones
+        session["username"] = username
+        return redirect("/")
+    else:
+        flash('Please check your login details and try again.')
+        return render_template("login.html")
+
 
 @app.route('/logout')
 def logout():
