@@ -4,14 +4,18 @@ app = Flask(__name__)
 
 app.secret_key = "L:slkjweijsdhJAS"
 
-adminUsername = "admin"
-adminPassword = "admin"
-
+users = {"admin":{
+            "password": "admin",
+            "name": "Admin User"},
+         "pleb":{
+            "password": "password",
+            "name": "Pleb User"}
+         }
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template("index.html", user=session["username"] if "username" in session else None)
+    return render_template("index.html", user=session["name"] if "username" in session else None)
 
 
 @app.route('/login')
@@ -26,8 +30,9 @@ def login():
 def loginPost():
     username = request.form["username"]
     password = request.form["password"]
-    if username == adminUsername and password == adminPassword: # Check entered username and password match the known ones
+    if username in users and password == users[username]["password"]: # Check entered username and password match the known ones
         session["username"] = username
+        session["name"] = users[username]["name"]
         return redirect("/")
     else:
         flash('Please check your login details and try again.')
