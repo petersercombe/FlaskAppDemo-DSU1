@@ -12,6 +12,26 @@ users = {"admin":{
             "name": "Pleb User"}
          }
 
+lostProperty = {0:{"title":"Water Bottle",
+                   "description":"Blue Camelbak 1L",
+                   "date":"2022-04-22",
+                   "claimed":False,
+                   "claimedBy":"",
+                   "image":"picture1.jpg"},
+                1:{"title":"Hat",
+                   "description":"Blue Sports Hat",
+                   "date":"2022-04-20",
+                   "claimed":False,
+                   "claimedBy":"",
+                   "image":""},
+                2:{"title":"Headphones",
+                   "description":"Black, Fancy, Wireless",
+                   "date":"2022-04-18",
+                   "claimed":True,
+                   "claimedBy":"John Johnson",
+                   "image":"picture2.jpg"}
+        }
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -45,4 +65,4 @@ def logout():
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True) # Debugging on when doing html changes.
