@@ -23,7 +23,7 @@ lostProperty = {0:{"title":"Water Bottle",
                    "date":"2022-04-20",
                    "claimed":False,
                    "claimedBy":"",
-                   "image":""},
+                   "image":"noImage.png"},
                 2:{"title":"Headphones",
                    "description":"Black, Fancy, Wireless",
                    "date":"2022-04-18",
@@ -35,7 +35,9 @@ lostProperty = {0:{"title":"Water Bottle",
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template("index.html", user=session["name"] if "username" in session else None)
+    return render_template("index.html",
+                           user=session["name"] if "username" in session else None,
+                           lostProperty=lostProperty)
 
 
 @app.route('/login')

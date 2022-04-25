@@ -4,12 +4,30 @@
 
 {% block content %}
 
-{% if user %}
-<p>Welcome home, {{user}}!</p>
-<a href="/logout">Logout</a>
-{% else %}
-<a href="/login">Please Login</a> or <a href="/signup">sign up</a>
-{% endif %}
+<div class="table-responsive">
+    <table class="table  table-hover">
+        <thead>
+            <tr>
+              <th scope="col" style="width:20%">Image</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for index, data in lostProperty.items() %}
+        {% if data["claimed"] == False %}
+            <tr style="cursor:pointer" onclick="location.href='/item/{{index}}'">
+                  <td><img src='/static/images/{{data["image"]}}' class="img-fluid" alt="..."></td>
+                  <td>{{data["title"]}}</td>
+                  <td>{{data["description"]}}</td>
+                  <td>{{data["date"]}}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+  </table>
+</div>
 
 
 {% endblock %}
