@@ -39,6 +39,13 @@ def home():
                            user=session["name"] if "username" in session else None,
                            lostProperty=lostProperty)
 
+@app.route('/claimed')
+def claimed():
+    if "username" in session:
+        return render_template("claimed.html", user=session["name"], lostProperty=lostProperty)
+    else:
+        flash('You must be logged in to view this page.')
+        return render_template("login.html")
 
 @app.route('/login')
 def login():

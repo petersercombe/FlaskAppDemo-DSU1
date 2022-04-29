@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="table-responsive">
+    <table class="table  table-hover">
+        <thead>
+            <tr>
+              <th scope="col" style="width:20%">Image</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Date</th>
+              <th scope="col">Claimed By</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for index, data in lostProperty.items() %}
+        {% if data["claimed"] == True %}
+            <tr style="cursor:pointer" onclick="location.href='/item/{{index}}'">
+                  <td><img src='/static/images/{{data["image"]}}' class="img-fluid" alt="..."></td>
+                  <td>{{data["title"]}}</td>
+                  <td>{{data["description"]}}</td>
+                  <td>{{data["date"]}}</td>
+                  <td>{{data["claimedBy"]}}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+  </table>
+</div>
+
+
+{% endblock %}
