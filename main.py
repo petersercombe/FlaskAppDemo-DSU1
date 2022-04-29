@@ -47,6 +47,23 @@ def claimed():
         flash('You must be logged in to view this page.')
         return render_template("login.html")
 
+@app.route('/item/<key>')
+def item(key):
+    return render_template("item.html",
+                           user=session["name"] if "username" in session else None,
+                           data=lostProperty[int(key)])
+
+
+@app.route('/add')
+def add():
+    if "username" in session:
+        return render_template("add.html",
+                               user=session["name"])
+    else:
+        flash('You must be logged in to view this page.')
+        return render_template("login.html")
+
+
 @app.route('/login')
 def login():
     if "username" in session:

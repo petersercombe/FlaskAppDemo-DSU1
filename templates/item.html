@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Item{% endblock %}
+
+{% block content %}
+
+<br>
+  <div class="row ">
+    <div class="col-md-4">
+      <img src='/static/images/{{data["image"]}}' class="img-fluid img-thumbnail" alt="...">
+    </div>
+    <div class="col-md-8">
+        <h5>{{data["title"]}}</h5>
+        <p>{{data["description"]}}</p>
+        {% if user %}
+            <p>Claimed by: {{data["claimedBy"]}}</p>
+            Link to edit item
+        {% endif %}
+        <p><small class="text-muted">Last updated {{data["date"]}}</small></p>
+      </div>
+    </div>
+
+
+{% endblock %}
