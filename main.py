@@ -1,8 +1,12 @@
 from flask import *
+import os, sys # for file operations
+import datetime # for datetime
 
 app = Flask(__name__)
 
 app.secret_key = "L:slkjweijsdhJAS"
+folderLocation = os.path.dirname(os.path.realpath(sys.argv[0]))
+app.config["uploadsFolder"] = folderLocation + "/static/images/"
 
 users = {"admin":{
             "password": "admin",
@@ -59,6 +63,29 @@ def add():
     if "username" in session:
         return render_template("add.html",
                                user=session["name"])
+    else:
+        flash('You must be logged in to view this page.')
+        return render_template("login.html")
+
+@app.route('/add', methods = ["POST"])
+def addPost():
+    if "username" in session:
+        currentDT = datetime.datetime.now()
+        files = request.files["image"]
+        if files:
+            fileName = currentDT.strftime("%Y-%m-%d %H-%M-%S") + "-" + files.filename
+            files.save(os.path.join(app.config["uploadsFolder"], fileName))
+            image = fileName
+        else:
+            image = "noImage.png"
+        lostProperty[len(lostProperty)] = {"title":request.form["title"],
+                                           "description":request.form["description"],
+                                           "date":currentDT.strftime("%Y-%m-%d"),
+                                           "claimed":False,
+                                           "claimedBy":"",
+                                           "image":image}
+        print(lostProperty)
+        return redirect("/")
     else:
         flash('You must be logged in to view this page.')
         return render_template("login.html")
