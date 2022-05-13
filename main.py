@@ -1,6 +1,7 @@
 from flask import *
 import os, sys # for file operations
 import datetime # for datetime
+from imageUtils import *
 
 app = Flask(__name__)
 
@@ -76,6 +77,8 @@ def addPost():
             fileName = currentDT.strftime("%Y-%m-%d %H-%M-%S") + "-" + files.filename
             files.save(os.path.join(app.config["uploadsFolder"], fileName))
             image = fileName
+            thumb = thumbnail(Image.open(files))
+            thumb.save(os.path.join(app.config["uploadsFolder"], 'thumb_'+fileName), quality=95)
         else:
             image = "noImage.png"
         lostProperty[len(lostProperty)] = {"title":request.form["title"],
