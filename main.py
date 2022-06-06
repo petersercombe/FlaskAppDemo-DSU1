@@ -114,6 +114,28 @@ def loginPost():
         flash('Please check your login details and try again.')
         return render_template("login.html")
 
+@app.route('/signup')
+def signup():
+    if "username" in session:
+        return redirect("/") # Send to home page if logged in already.
+    else:
+        return render_template("signup.html")
+
+
+@app.route('/signup', methods = ["POST"])
+def signupPost():
+    name = request.form["name"]
+    username = request.form["username"]
+    password = request.form["password"]
+    if username in users.keys():
+        flash('Username not available. Please try again.')
+        return render_template("signup.html")
+    else:
+        users[username] = {"password": password, "name": name}
+        session["username"] = username
+        session["name"] = name
+        return redirect("/")
+
 
 @app.route('/logout')
 def logout():
@@ -121,4 +143,4 @@ def logout():
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0") # Debugging on when doing html changes.
+    app.run(debug=True) # Debugging on when doing html changes.
