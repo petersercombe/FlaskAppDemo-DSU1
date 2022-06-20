@@ -6,12 +6,16 @@
 
 <form action="/add" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Title</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1" name="title" required>
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" required>
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" required></textarea>
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="categoryID" class="form-label">Category</label>
+      <input type="text" class="form-control" id="categoryID" name="categoryID" required>
     </div>
     <div class="mb-3">
       <label for="formFile" class="form-label">Image File</label>

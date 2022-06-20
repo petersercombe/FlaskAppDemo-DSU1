@@ -2,6 +2,7 @@ from flask import *
 import os, sys # for file operations
 import datetime # for datetime
 from imageUtils import *
+from dbUtils import *
 
 app = Flask(__name__)
 
@@ -42,7 +43,7 @@ lostProperty = {0:{"title":"Water Bottle",
 def home():
     return render_template("index.html",
                            user=session["name"] if "username" in session else None,
-                           lostProperty=lostProperty)
+                           lostProperty=selectQuery(getItems,(50,0))) # update to add pagination
 
 @app.route('/claimed')
 def claimed():
@@ -52,11 +53,11 @@ def claimed():
         flash('You must be logged in to view this page.')
         return render_template("login.html")
 
-@app.route('/item/<key>')
-def item(key):
+@app.route('/item/<itemID>')
+def item(itemID):
     return render_template("item.html",
                            user=session["name"] if "username" in session else None,
-                           data=lostProperty[int(key)])
+                           item=selectQuery(getOneItem, (itemID,))[0])
 
 
 @app.route('/add')
@@ -81,13 +82,12 @@ def addPost():
             thumb.save(os.path.join(app.config["uploadsFolder"], 'thumb_'+fileName), quality=95)
         else:
             image = "noImage.png"
-        lostProperty[len(lostProperty)] = {"title":request.form["title"],
-                                           "description":request.form["description"],
-                                           "date":currentDT.strftime("%Y-%m-%d"),
-                                           "claimed":False,
-                                           "claimedBy":"",
-                                           "image":image}
-        print(lostProperty)
+
+        commitQuery(addItem, (request.form["title"],
+                              request.form["description"],
+                              request.form["categoryID"],
+                              currentDT.strftime("%Y-%m-%d"),
+                              image))
         return redirect("/")
     else:
         flash('You must be logged in to view this page.')

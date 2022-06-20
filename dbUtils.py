@@ -32,12 +32,22 @@ def selectQuery(query, data=None):
 
 getAllUsers = "SELECT * FROM users"
 
-getOneUser = "SELECT * FROM users WHERE username == ?"
+getOneUser = "SELECT * FROM users WHERE username == ?" # Used for logins
 
 addUser = "INSERT INTO users ('username','firstname','lastname','email','password') VALUES (?,?,?,?,?)"
 
-print(selectQuery(getAllUsers))
+getItems = "SELECT * FROM items LIMIT ? OFFSET ?"
 
-print(selectQuery(getOneUser, ['staff',]))
+getOneItem = "SELECT * FROM items WHERE itemID == ?"
+
+getFilteredItems = "SELECT * FROM items WHERE category == ?"
+
+addItem = "INSERT INTO items ('title','description','categoryID','date','image') VALUES (?,?,?,?,?)"
+
+# selectQuery(getItems, (50,0))
+
+# print(selectQuery(getAllUsers))
+
+# print(selectQuery(getOneUser, ['staff',]))
 
 # commitQuery(addUser, ('staff', 'Staff', 'User', 'staff@bcc.net.au', 'staff'))
