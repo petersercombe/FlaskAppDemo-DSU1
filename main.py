@@ -10,34 +10,6 @@ app.secret_key = "L:slkjweijsdhJAS"
 folderLocation = os.path.dirname(os.path.realpath(sys.argv[0]))
 app.config["uploadsFolder"] = folderLocation + "/static/images/"
 
-users = {"admin":{
-            "password": "admin",
-            "name": "Admin User"},
-         "pleb":{
-            "password": "password",
-            "name": "Pleb User"}
-         }
-
-lostProperty = {0:{"title":"Water Bottle",
-                   "description":"Blue Camelbak 1L",
-                   "date":"2022-04-22",
-                   "claimed":False,
-                   "claimedBy":"",
-                   "image":"picture1.jpg"},
-                1:{"title":"Hat",
-                   "description":"Blue Sports Hat",
-                   "date":"2022-04-20",
-                   "claimed":False,
-                   "claimedBy":"",
-                   "image":"noImage.png"},
-                2:{"title":"Headphones",
-                   "description":"Black, Fancy, Wireless",
-                   "date":"2022-04-18",
-                   "claimed":True,
-                   "claimedBy":"John Johnson",
-                   "image":"picture2.jpg"}
-        }
-
 @app.route('/')
 @app.route('/home')
 def home():

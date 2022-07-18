@@ -36,7 +36,7 @@ getOneUser = "SELECT * FROM users WHERE username == ?" # Used for logins
 
 addUser = "INSERT INTO users ('username','firstname','lastname','email','password') VALUES (?,?,?,?,?)"
 
-getItems = "SELECT * FROM items LIMIT ? OFFSET ?"
+getItems = "SELECT * FROM items LEFT JOIN claims ON items.itemID == claims.itemID LIMIT ? OFFSET ?"
 
 getOneItem = "SELECT * FROM items WHERE itemID == ?"
 
