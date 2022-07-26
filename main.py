@@ -97,7 +97,6 @@ def signup():
 
 @app.route('/signup', methods = ["POST"])
 def signupPost():
-    name = request.form["name"]
     username = request.form["username"]
     users = selectQuery(getAllUsers)
     if username in users:
@@ -110,7 +109,7 @@ def signupPost():
                               request.form["email"],
                               request.form["password"]))
         session["username"] = username
-        session["name"] = name
+        session["name"] = request.form["firstname"]
         return redirect("/")
 
 
