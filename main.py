@@ -78,9 +78,10 @@ def login():
 def loginPost():
     username = request.form["username"]
     password = request.form["password"]
-    if username in users and password == users[username]["password"]: # Check entered username and password match the known ones
+    user = selectQuery(getOneUser,(username,))
+    if len(user)>0 and password == user[0][5]: # Check entered username and password match the known ones
         session["username"] = username
-        session["name"] = users[username]["name"]
+        session["name"] = user[0][2]
         return redirect("/")
     else:
         flash('Please check your login details and try again.')
@@ -98,12 +99,16 @@ def signup():
 def signupPost():
     name = request.form["name"]
     username = request.form["username"]
-    password = request.form["password"]
-    if username in users.keys():
+    users = selectQuery(getAllUsers)
+    if username in users:
         flash('Username not available. Please try again.')
         return render_template("signup.html")
     else:
-        users[username] = {"password": password, "name": name}
+        commitQuery(addUser, (username,
+                              request.form["firstname"],
+                              request.form["lastname"],
+                              request.form["email"],
+                              request.form["password"]))
         session["username"] = username
         session["name"] = name
         return redirect("/")
