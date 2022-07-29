@@ -20,7 +20,7 @@ def home():
 @app.route('/claimed')
 def claimed():
     if "username" in session:
-        return render_template("claimed.html", user=session["name"], lostProperty=lostProperty)
+        return render_template("claimed.html", user=session["name"], lostProperty=selectQuery(getItems,(50,0)))
     else:
         flash('You must be logged in to view this page.')
         return render_template("login.html")
@@ -99,7 +99,7 @@ def signup():
 def signupPost():
     username = request.form["username"]
     users = selectQuery(getAllUsers)
-    if username in users:
+    if username in str(users):
         flash('Username not available. Please try again.')
         return render_template("signup.html")
     else:
